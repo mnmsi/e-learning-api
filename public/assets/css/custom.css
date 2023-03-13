@@ -1,0 +1,82 @@
+.navbar-vertical .navbar-brand > img, .navbar-vertical .navbar-brand-img {
+    max-height: 4rem !important;
+}
+
+.nav-item .sub-menu li {
+    margin-left: 4rem;
+    margin-top: 0.125rem;
+}
+
+.sub-menu a {
+    margin-left: 0 !important;
+}
+
+li a:hover {
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+
+.mwp-150 {
+    max-width: 150px !important;
+}
+
+.data-action .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+.swal2-popup {
+    width: 26rem !important;
+}
+
+select {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    padding-right: 2rem !important;
+}
+
+.swal2-actions .swal2-confirm {
+    background-image: linear-gradient(310deg, #7928ca, #ff0080) !important;
+}
+
+.swal2-actions .swal2-cancel {
+    background-image: linear-gradient(310deg, #ea0606 0%, #ff667c 100%) !important;
+}
+
+.swal2-actions button {
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.75rem !important;
+    border-radius: 0.5rem !important;
+    transition: all 0.15s ease-in !important;
+}
+
+.hr-sect {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.35);
+    margin: 8px 0px;
+    font-weight: bold;
+    font-size: small;
+}
+
+.hr-sect:before,
+.hr-sect:after {
+    content: "";
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0px 8px;
+}
