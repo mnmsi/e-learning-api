@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                     'ethnicity_id'        => 1,
                     'name'                => 'admin',
                     'email'               => 'admin@test.com',
-                    'password'            => '$2a$12$0A1ghgYglhzUdUbFXoQrM.kaZnGqeJ1qRl8vp/ivRmStLdokGDLhW',
+                    'password'            => '$2a$12$dn0tcaS6A/m6yAV0ueDicemuj2.kgAQp1i.T8sWZpG4RycFdUz.m.',
                     'avatar'              => "sample_avatars/1.png",
                 ],
                 [
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                     'ethnicity_id'        => 1,
                     'name'                => 'developer',
                     'email'               => 'dev@test.com',
-                    'password'            => '$2a$12$0A1ghgYglhzUdUbFXoQrM.kaZnGqeJ1qRl8vp/ivRmStLdokGDLhW',
+                    'password'            => '$2a$12$dn0tcaS6A/m6yAV0ueDicemuj2.kgAQp1i.T8sWZpG4RycFdUz.m.',
                     'avatar'              => "sample_avatars/1.png",
                 ],
             ]
