@@ -14,6 +14,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('unauthenticated', [ApiAuthController::class, 'unauthenticated'])->name('unauthenticated');
 Route::match(['get', 'post'], 'login', [ApiAuthController::class, 'authenticateUser']);
@@ -164,4 +165,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::get('logout', [ApiAuthController::class, 'logout']);
+});
+
+
+Route::post('upload', function (\Illuminate\Http\Request $request) {
+    return Storage::disk('s3')->put('file', $request->file);
+});
+
+Route::get('file-path', function (\Illuminate\Http\Request $request) {
+    return Storage::exists($request->path);
+//    return Storage::disk('s3')->exists($request->path);
+//    return Storage::disk('s3')->response($request->path);
 });
