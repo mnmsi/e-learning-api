@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'educator', 'middleware' => 'educator'], function () {
         Route::get('student/list', [EducatorController::class, 'studentList']);
-        Route::get('info/{learnerId}', [EducatorController::class, 'studentInfo']);
+//        Route::get('info/{learnerId}', [EducatorController::class, 'studentInfo']);
         Route::get('balance-info', [EducatorController::class, 'balanceInfo']);
         Route::get('transactions', [EducatorController::class, 'transactions']);
 

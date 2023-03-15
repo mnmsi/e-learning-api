@@ -94,8 +94,8 @@ class ApiAuthController extends Controller
                 Auth::login($user);
                 $token = $user->createToken('user-auth');
 
-                $user->notify(new SendMailNotification());
-                event(new Registered($user));
+//                $user->notify(new SendMailNotification());
+//                event(new Registered($user));
 
                 return response()->json([
                     'status' => true,
