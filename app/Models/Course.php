@@ -140,12 +140,11 @@ class Course extends Model
     public function videos()
     {
         return $this->hasMany(Video::class)->where(function ($q) {
-            if (Gate::allows('educator')) {
-                $q->where('educator_id', Auth::id());
-            }
-        })
-                    ->orderBy('order_no', 'ASC')
-                    ->orderBy('id', 'ASC');
+                if (Gate::allows('educator')) {
+                    $q->where('educator_id', Auth::id());
+                }
+            })->orderBy('order_no', 'ASC')
+            ->orderBy('id', 'ASC');
     }
 
     public function follow()
