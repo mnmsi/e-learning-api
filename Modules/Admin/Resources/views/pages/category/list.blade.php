@@ -1,17 +1,17 @@
 @extends('admin::template.base_template', [
-    'bcrump' => "Sample Avatar",
-    'bcrumpTitle' => "Avatar List"
+    'bcrump' => "Category",
+    'bcrumpTitle' => "Category List"
 ])
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Avatar List</h6>
+                    <h6>Category List</h6>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0" id="saTable">
+                        <table class="table align-items-center mb-0" id="caTable">
                             <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -30,7 +30,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($sampleAvatars as $avatar)
+                            @foreach($list as $avatar)
                                 <tr cellData="{{$avatar->id}}">
                                     <td>
                                         <div class="d-flex px-2 py-1">
@@ -47,7 +47,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{$avatar->description}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$avatar->description ?? '-'}}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         @if($avatar->is_active)
@@ -63,10 +63,10 @@
                                     </td>
                                     <td class="align-middle data-action">
                                         @include('admin::components.action', [
-                                            'edit' => route('sa.edit', encrypt($avatar->id)),
-                                            'delete' => route('sa.delete', encrypt($avatar->id)),
+                                            'edit' => route('category.edit', encrypt($avatar->id)),
+                                            'delete' => route('category.delete', encrypt($avatar->id)),
                                             'publish' => "publish",
-                                            'tableId' => 'saTable',
+                                            'tableId' => 'caTable',
                                             'rowId' => $avatar->id
                                         ])
                                     </td>
@@ -76,7 +76,7 @@
                         </table>
                     </div>
                     <div class="d-flex justify-content-center mt-3">
-                        {!! $sampleAvatars->links() !!}
+                        {!! $list->links() !!}
                     </div>
                 </div>
             </div>

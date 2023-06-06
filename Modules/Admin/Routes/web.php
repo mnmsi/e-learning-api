@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Admin\Http\Controllers\CategoryController;
 use Modules\Admin\Http\Controllers\CourseConfigController;
 use Modules\Admin\Http\Controllers\DashboardController;
 use Modules\Admin\Http\Controllers\AuthController;
@@ -46,6 +47,15 @@ Route::prefix('admin')->group(function () {
             Route::post('update/{id}', [SampleAvatarController::class, 'update'])->name('update');
         });
 
+//        category routes
+        Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+            Route::get('list', [CategoryController::class, 'index'])->name('list');
+            Route::get('create', [CategoryController::class, 'create'])->name('create');
+            Route::post('store', [CategoryController::class, 'store'])->name('store');
+            Route::get('delete/{id}', [CategoryController::class, 'destroy'])->name('delete');
+            Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('edit');
+            Route::post('update/{id}', [CategoryController::class, 'update'])->name('update');
+        });
         //User Role Routes
         Route::group(['prefix' => 'user-role', 'as' => 'ur.'], function () {
             Route::get('list', [UserRoleController::class, 'list'])->name('list');

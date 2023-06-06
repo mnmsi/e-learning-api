@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\StudentInfoResource;
 use App\Repositories\AccType\AccTypeRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Exceptions\Exceptions;
@@ -276,6 +277,18 @@ class UserController extends Controller
                     }
                 }
 
+                if ($request->has('name')) {
+                    if (!empty($request->name)) {
+                        $userUpdateData['name'] = $request->name;
+                    }
+                }
+
+                if ($request->has('birth_date')) {
+                    if (!empty($request->birth_date)) {
+                        $userUpdateData['birth_date'] = Carbon::parse($request->birth_date)->format('Y-m-d');
+                    }
+                }
+
                 $isUpdate = $this->userRepo->userUpdate($userUpdateData);
 
                 if ($request->has('educations')) {
@@ -291,6 +304,7 @@ class UserController extends Controller
         }
         catch (\Throwable $th) {
             DB::rollback();
+            dd($th);
             throw new Exceptions();
         }
     }
