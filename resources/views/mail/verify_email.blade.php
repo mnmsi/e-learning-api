@@ -23,7 +23,8 @@
                         <p>Hello!</p>
                         <p>Please use the following verification token to verify your email address:</p>
                         <p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 30px; font-weight: bolder; letter-spacing: 10px;">{{ $token ?? '123456' }}</p>
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 30px; font-weight: bolder; letter-spacing: 10px;">{{ $token ?? '-' }}</p>
+                        <p>After 30 minutes token will be expired.</p>
                         <p>If you did not create an account, no further action is required.</p>
                     </td>
                 </tr>

@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
         Route::prefix('email')->group(function () {
             Route::get('verify', [UserController::class, 'sendVerificationNotification']);
+            Route::get('verify-token', [UserController::class, 'emailTokenVerify']);
             Route::get('verify/{id}/{hash}', [UserController::class, 'verificationReq'])->name('verification.verify');
         });
     });

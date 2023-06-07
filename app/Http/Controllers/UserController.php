@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\StudentInfoResource;
+use App\Models\EmailVerify;
+use App\Notifications\EmailVerificationNotification;
 use App\Repositories\AccType\AccTypeRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -27,6 +29,7 @@ use App\Repositories\AgeType\AgeTypeRepositoryInterface;
 use App\Repositories\Ethnicity\EthnicityRepositoryInterface;
 use App\Repositories\SampleAvatar\SampleAvatarRepositoryInterface;
 use App\Repositories\InterestedTopic\InterestedTopicRepositoryInterface;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -52,15 +55,15 @@ class UserController extends Controller
         AccTypeRepositoryInterface         $accTypeRepo
     )
     {
-        $this->sampleAvatarRepo  = $sampleAvatarRepo;
-        $this->ageTypeRepo       = $ageTypeRepo;
-        $this->ethnicityRepo     = $ethnicityRepo;
-        $this->topicRepo         = $topicRepo;
-        $this->followRepo        = $followRepo;
+        $this->sampleAvatarRepo = $sampleAvatarRepo;
+        $this->ageTypeRepo = $ageTypeRepo;
+        $this->ethnicityRepo = $ethnicityRepo;
+        $this->topicRepo = $topicRepo;
+        $this->followRepo = $followRepo;
         $this->interestTopicRepo = $interestTopicRepo;
-        $this->userRepo          = $userRepo;
-        $this->classRepo         = $classRepo;
-        $this->accTypeRepo       = $accTypeRepo;
+        $this->userRepo = $userRepo;
+        $this->classRepo = $classRepo;
+        $this->accTypeRepo = $accTypeRepo;
     }
 
     public function sampleAvatar()
@@ -68,11 +71,10 @@ class UserController extends Controller
         try {
             return response()->json([
                 'status' => true,
-                'data'   => SampleAvatarResource::collection($this->sampleAvatarRepo->getSampleAvatars()),
+                'data' => SampleAvatarResource::collection($this->sampleAvatarRepo->getSampleAvatars()),
             ]);
 
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -82,11 +84,10 @@ class UserController extends Controller
         try {
             return response()->json([
                 'status' => true,
-                'data'   => AccTypeResource::collection($this->accTypeRepo->getAccTypes($role_id)),
+                'data' => AccTypeResource::collection($this->accTypeRepo->getAccTypes($role_id)),
             ]);
 
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -96,11 +97,10 @@ class UserController extends Controller
         try {
             return response()->json([
                 'status' => true,
-                'data'   => AgeTypeResource::collection($this->ageTypeRepo->getAgeTypes()),
+                'data' => AgeTypeResource::collection($this->ageTypeRepo->getAgeTypes()),
             ]);
 
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -110,11 +110,10 @@ class UserController extends Controller
         try {
             return response()->json([
                 'status' => true,
-                'data'   => EthnicityResource::collection($this->ethnicityRepo->getEthnicity()),
+                'data' => EthnicityResource::collection($this->ethnicityRepo->getEthnicity()),
             ]);
 
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -125,11 +124,10 @@ class UserController extends Controller
             return response()->json([
                 'status' => true,
                 // 'data'   => TopicResource::collection($this->topicRepo->getTopics()),
-                'data'   => $this->topicRepo->getTopics(),
+                'data' => $this->topicRepo->getTopics(),
             ]);
 
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -143,8 +141,7 @@ class UserController extends Controller
                 return Exceptions::error();
             }
 
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -155,14 +152,13 @@ class UserController extends Controller
             if (Gate::allows('learner')) {
                 return response()->json([
                     'status' => true,
-                    'data'   => FollowResource::collection($this->followRepo
+                    'data' => FollowResource::collection($this->followRepo
                         ->whereGet(['learner_id' => Auth::id()])),
                 ]);
             } else {
                 return Exceptions::forbidden();
             }
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -175,8 +171,7 @@ class UserController extends Controller
             } else {
                 return Exceptions::error();
             }
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -185,7 +180,7 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-            $user           = Auth::user();
+            $user = Auth::user();
             $userUpdateData = $request->all();
 
             if (count($userUpdateData)) {
@@ -198,7 +193,7 @@ class UserController extends Controller
                             $classData['image'] = $request->course['image']->store('course');
                         }
 
-                        $classData['educator_id']     = $user->id;
+                        $classData['educator_id'] = $user->id;
                         $classData['invitation_link'] = "broadcast link need to work";
                         $this->classRepo->insertData($classData);
 
@@ -226,7 +221,7 @@ class UserController extends Controller
                             }
 
                             $value['user_parent_id'] = $user->id;
-                            $value['password']       = $user->password;
+                            $value['password'] = $user->password;
                             $this->userRepo->insertData($value);
                         }
                     } else {
@@ -237,7 +232,7 @@ class UserController extends Controller
                 if (isset($request->interested_topic_ids)) {
                     foreach ($request->interested_topic_ids as $index => $topicId) {
                         $interestedTopic['learner_id'] = $user->id;
-                        $interestedTopic['topic_id']   = $topicId;
+                        $interestedTopic['topic_id'] = $topicId;
                         $this->interestTopicRepo->firstOrCreate($interestedTopic);
                     }
                 }
@@ -301,10 +296,8 @@ class UserController extends Controller
             } else {
                 return Exceptions::error("Empty request!");
             }
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
             throw new Exceptions();
         }
     }
@@ -314,12 +307,11 @@ class UserController extends Controller
         try {
             return response()->json([
                 'status' => true,
-                'data'   => [
+                'data' => [
                     'user' => Auth::user()->load('user_educations:id,user_id,name,year')->loadCount('course'),
                 ],
             ]);
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -330,13 +322,12 @@ class UserController extends Controller
             if (empty(Auth::user()->user_parent_id)) {
                 return response()->json([
                     'status' => true,
-                    'data'   => $this->userRepo->getChildren(),
+                    'data' => $this->userRepo->getChildren(),
                 ]);
             } else {
                 return Exceptions::error("Unauthorized. You're a child user.");
             }
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -346,14 +337,13 @@ class UserController extends Controller
         try {
             if (Gate::allows('learner')) {
                 return ['status' => $this->followRepo->whereExists([
-                    'learner_id'  => Auth::id(),
+                    'learner_id' => Auth::id(),
                     'educator_id' => $educatorId,
                 ])];
             } else {
                 return Exceptions::forbidden();
             }
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -373,10 +363,9 @@ class UserController extends Controller
             $profile->loadCount('course_info');
             return [
                 'status' => true,
-                'data'   => new StudentInfoResource($profile)
+                'data' => new StudentInfoResource($profile)
             ];
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             throw new Exceptions();
         }
     }
@@ -384,10 +373,19 @@ class UserController extends Controller
     public function sendVerificationNotification(Request $request)
     {
         try {
-            $request->user()->sendEmailVerificationNotification();
+//            old
+//            $request->user()->sendEmailVerificationNotification();
+
+//            new
+            $token = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+            $email_verify = new EmailVerify();
+            $email_verify->user_id = Auth::id();
+            $email_verify->token = $token;
+            $email_verify->expire_at = Carbon::now()->addMinutes(30);
+            $email_verify->save();
+            Auth::user()->notify(new EmailVerificationNotification($token));
             return Exceptions::success();
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return Exceptions::error();
         }
     }
@@ -397,9 +395,43 @@ class UserController extends Controller
         try {
             $request->fulfill();
             return Exceptions::success();
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return Exceptions::error();
+        }
+    }
+
+    public function emailTokenVerify(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'token' => 'required|string|max:255'
+            ]);
+
+            if ($validator->fails()) {
+                Exceptions::error($validator->errors()->first());
+            }
+
+            $check = EmailVerify::where('user_id', Auth::id())
+                ->where('token', $request->token)
+                ->where('status', 0)->first();
+
+            if ($check) {
+                $expirationDate = Carbon::parse($check->expire_at);
+
+                if (!$expirationDate->isPast()) {
+                    $check->status = 1;
+                    $check->save();
+                    Auth::user()->markEmailAsVerified();
+                    return Exceptions::success();
+                } else {
+                    return Exceptions::error("Token expired.");
+                }
+            } else {
+                return Exceptions::error("Token used or not found.");
+            }
+
+        } catch (\Exception $e) {
+            return Exceptions::error($e->getMessage(), 500);
         }
     }
 }
