@@ -36,7 +36,7 @@
                                         <div class="d-flex px-2 py-1">
                                             <div>
                                                 @if($avatar->image)
-                                                    <img src="{{ route('asset', ['data' => $avatar->image])}}"
+                                                    <img src="{{ $avatar->image}}"
                                                          loading="lazy"
                                                          class="avatar avatar-sm me-3" alt="avatar">
                                                 @endif

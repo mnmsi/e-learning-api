@@ -28,4 +28,13 @@ class Category extends Model
             }
         })->take(5);
     }
+
+    public function getImageAttribute($value)
+    {
+        if($value)
+        {
+            return route('asset', ['data' => $value]);
+        }
+        return $value;
+    }
 }
