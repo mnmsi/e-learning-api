@@ -169,6 +169,9 @@ class ApiAuthController extends Controller
         }
     }
 
+    /**
+     * @throws Exceptions
+     */
     public function appleLogin(AppleLoginRequest $request)
     {
         try {
@@ -296,13 +299,10 @@ class ApiAuthController extends Controller
     {
         try {
             if ($user = Auth::user()) {
-//                Auth::logout();
                 $user->tokens()->delete();
                 return ['status' => true];
             }
-
             return Exceptions::error('Session Expired');
-
         }
         catch (Throwable $exception) {
             throw new Exceptions();

@@ -93,7 +93,6 @@ class AuthServiceProvider extends ServiceProvider
             if (request('platform') === 'web') {
                 $link = "https://tuputime.com/email-verification?id=" . $id . "&hash=" . $hash;
             } else {
-//                $link = "https://app.tuputime.com/?link=" . urlencode("https://app.tuputime.com/email-verification?id=" . $id . "&hash=" . $hash) . "&apn=app.tuputime.com&ibi=com.tuputime";
                 $link = "https://app.tuputime.com/?link=" . urlencode("https://app.tuputime.com/email-verification?id=" . $id . "&hash=" . $hash) . "&apn=com.iotait.tuputime&ibi=com.tuputime";
             }
 
