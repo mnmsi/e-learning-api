@@ -98,7 +98,6 @@ class ApiAuthController extends Controller
 
 //                $user->notify(new SendMailNotification());
 //                event(new Registered($user));
-                $this->mailSennd();
 
                 return response()->json([
                     'status' => true,
@@ -392,18 +391,5 @@ class ApiAuthController extends Controller
         } catch (\Exception $exception) {
             throw new Exceptions();
         }
-    }
-
-//    send verify token
-    private function mailSennd()
-    {
-        $token = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
-        $email_verify = new EmailVerify();
-        $email_verify->user_id = Auth::id();
-        $email_verify->token = $token;
-        $email_verify->expire_at = Carbon::now()->addMinutes(30);
-        $email_verify->save();
-        Auth::user()->notify(new EmailVerificationNotification($token));
-        return 1;
     }
 }
