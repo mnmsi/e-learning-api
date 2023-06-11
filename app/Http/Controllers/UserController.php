@@ -292,7 +292,14 @@ class UserController extends Controller
                 }
 
                 DB::commit();
-                return Exceptions::success();
+
+                return response()->json([
+                    'status' => true,
+                    'data' => [
+                        'user' => Auth::user()->load('user_educations:id,user_id,name,year')->loadCount('course'),
+                    ],
+                ]);
+//                return Exceptions::success();
             } else {
                 return Exceptions::error("Empty request!");
             }
