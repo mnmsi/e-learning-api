@@ -296,7 +296,7 @@ class UserController extends Controller
                 return response()->json([
                     'status' => true,
                     'data' => [
-                        'user' => Auth::user()->load('user_educations:id,user_id,name,year')->loadCount('course'),
+                        'user' => $this->userRepo->findData(Auth::id())->load('user_educations:id,user_id,name,year')->loadCount('course'),
                     ],
                 ]);
 //                return Exceptions::success();
